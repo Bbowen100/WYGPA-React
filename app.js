@@ -15,15 +15,15 @@ const comp_coursesRouter = require('./routes/comp-courses');
 const curr_coursesRouter = require('./routes/curr-courses');
 const dev = app.get('env') !== 'production';
 
-mongoose.connect(env.MONGO_DEV_URL);
-
 if (!dev) {
   app.disable('x-powered-by');
   app.use(compression());
   app.use(logger('common'));
   app.use(express.static(path.resolve(__dirname, 'client/build')));
+  mongoose.connect(env.MONGO_PROD_URL);
 } else {
   app.use(logger('dev'));
+  mongoose.connect(env.MONGO_DEV_URL);
 }
 
 app.use(bodyParser.json());
