@@ -9,6 +9,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jsonwebtoken": "^8.1.1",
+    "material-ui": "^1.0.0-beta.39",
     "prop-types": "^15.6.0",
     "react": "15.6.2",
     "react-chartjs-2": "^2.7.0",

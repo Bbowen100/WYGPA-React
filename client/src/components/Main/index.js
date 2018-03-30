@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import ItemList from '../ItemList';
 import Average from '../Average';
 import Chart from '../Chart';
+import CustomAppBar from '../Layout/AppBar';
 import DesiredAverage from '../DesiredAverage';
 import * as actions from '../../actions';
+
 import 'bootstrap/dist/css/bootstrap.css';
-import './style.css';
+import Button from 'material-ui/Button';
 
 class Main extends Component {
   constructor(props) {
@@ -81,8 +81,8 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Welcome To Your Dashboard {this.props.state.auth.user}</h1>
+      <div>
+        <CustomAppBar text={this.props.state.auth.user + "'s dashboard"} />
 
         <h2> Current Courses </h2>
         <form onSubmit={this.handleAddCurrentCourse.bind(this)}>
@@ -106,7 +106,7 @@ class Main extends Component {
               placeholder="Course Weight"
             />
           </section>
-          <Button type="submit" size="sm" color="info">
+          <Button type="submit" size="small" color="primary">
             Add Current Course
           </Button>
         </form>
@@ -150,7 +150,7 @@ class Main extends Component {
               placeholder="Final Course Mark"
             />
           </section>
-          <Button type="submit" size="sm" color="info">
+          <Button type="submit" size="small" color="primary">
             Add Completed Course
           </Button>
         </form>

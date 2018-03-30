@@ -25,12 +25,12 @@ const enhancers = compose(
 const store = createStore(
   reducer,
   enhancers,
-  applyMiddleware(middleware, thunk),
-)
-if(localStorage.jwtToken){
+  applyMiddleware(middleware, thunk)
+);
+if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
-  var { user } = jwt.decode(localStorage.jwtToken)
-  store.dispatch(authSuccess(user))
+  var { user } = jwt.decode(localStorage.jwtToken);
+  store.dispatch(authSuccess(user));
 }
 
 ReactDOM.render(
@@ -40,9 +40,11 @@ ReactDOM.render(
         <Route exact path="/" component={Login} />
         <Route path="/dashboard" component={Main} />
         <Route path="/current-course" component={SingleCourse} />
-        <Route render={()=>{
-            return <p> 404 Not Found</p>
-          }} />
+        <Route
+          render={() => {
+            return <p> 404 Not Found</p>;
+          }}
+        />
       </Switch>
     </ConnectedRouter>
   </Provider>,
