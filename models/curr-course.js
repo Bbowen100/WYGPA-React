@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let currCourseSchema = new mongoose.Schema({
-  user_id: String,
+  user_id: mongoose.Schema.Types.ObjectId,
   courses: [
     {
       name: String,
