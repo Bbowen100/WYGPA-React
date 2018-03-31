@@ -6,6 +6,7 @@ import Average from '../Average';
 import Chart from '../Chart';
 import CustomAppBar from '../Layout/AppBar';
 import DesiredAverage from '../DesiredAverage';
+import Form from '../Form';
 import * as actions from '../../actions';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -83,6 +84,8 @@ class Main extends Component {
     return (
       <div>
         <CustomAppBar text={this.props.state.auth.user + "'s dashboard"} />
+
+        <Form />
 
         <h2> Current Courses </h2>
         <form onSubmit={this.handleAddCurrentCourse.bind(this)}>
