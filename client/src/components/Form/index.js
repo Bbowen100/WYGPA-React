@@ -1,77 +1,115 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import styles from './style';
 
 class Form extends Component {
-  render() {
-    let comp;
-    if (this.props.type == 'add-completed') {
-      comp = (
-        <div>
-          <form onSubmit={this.handleAddCompCourse.bind(this)}>
-            <section>
-              Course Name
-              <input
-                type="text"
-                name="name"
-                value={this.state.name}
-                onChange={this.handleChange}
-                placeholder="Course Name"
-              />
-            </section>
-            <section>
-              Course Weight
-              <input
-                type="text"
-                name="weight"
-                value={this.state.weight}
-                onChange={this.handleChange}
-                placeholder="Course Weight"
-              />
-            </section>
-            <section>
-              Final Mark
-              <input
-                type="text"
-                name="mark"
-                value={this.state.mark}
-                onChange={this.handleChange}
-                placeholder="Final Course Mark"
-              />
-            </section>
-            <Button type="submit" size="sm" color="info">
-              Add Completed Course
-            </Button>
-          </form>
-        </div>
-      );
-    } else if (this.props.type == 'add-current') {
-      comp = (
-        <form onSubmit={this.handleAddCurrentCourse.bind(this)}>
-          <section>
-            Course Name
-            <input
-              type="text"
-              name="cc_name"
-              value={this.state.cc_name}
-              onChange={this.handleChange}
-              placeholder="Course Name"
-            />
-          </section>
-          <section>
-            Course Weight
-            <input
-              type="text"
-              name="cc_weight"
-              value={this.state.cc_weight}
-              onChange={this.handleChange}
-              placeholder="Course Weight"
-            />
-          </section>
-          <Button type="submit" size="sm" color="info">
-            Add Current Course
-          </Button>
-        </form>
-      );
+  state = {
+    name: '',
+    weight: '',
+    mark: '',
+    nameError: false,
+    markError: false,
+    weightError: false
+  };
+
+  Submit = e => {
+    e.preventDefault();
+    const err = this.validate();
+    if (!err) {
+      this.props.onSubmit(this.state);
+      this.setState({
+        name: '',
+        weight: '',
+        mark: '',
+        nameError: false,
+        markError: false,
+        weightError: false
+      });
     }
-    return comp;
+  };
+
+  validate = () => {
+    const { name, weight, mark } = this.state;
+    let isError = false;
+    if (name.length < 1) {
+      this.setState({ nameError: true });
+      isError = true;
+    } else {
+      this.setState({ nameError: false });
+    }
+
+    if (isNaN(Number(weight))) {
+      this.setState({ weightError: true });
+      isError = true;
+    } else {
+      this.setState({ weightError: false });
+    }
+
+    if (isNaN(Number(mark)) || (Number(mark) < 0 || Number(mark) > 100)) {
+      this.setState({ markError: true });
+      isError = true;
+    } else {
+      this.setState({ markError: false });
+    }
+    return isError;
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const complete = this.props.type === 'complete';
+    return (
+      <form onSubmit={this.Submit.bind(this)}>
+        <TextField
+          name="name"
+          label="Name"
+          className={classes.textField}
+          value={this.state.name}
+          onChange={this.handleChange}
+          error={this.state.nameError}
+          margin="normal"
+        />
+
+        <TextField
+          name="weight"
+          label="Weight"
+          className={classes.textField}
+          value={this.state.weight}
+          onChange={this.handleChange}
+          error={this.state.weightError}
+          margin="normal"
+        />
+        {complete && (
+          <TextField
+            name="mark"
+            label="Mark"
+            className={classes.textField}
+            value={this.state.mark}
+            onChange={this.handleChange}
+            error={this.state.markError}
+            margin="normal"
+          />
+        )}
+        <Button type="submit" size="small" color="primary">
+          Submit
+        </Button>
+      </form>
+    );
   }
 }
+
+Form.propTypes = {
+  type: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired
+};
+
+export default withStyles(styles)(Form);

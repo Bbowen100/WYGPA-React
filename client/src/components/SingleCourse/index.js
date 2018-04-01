@@ -7,13 +7,13 @@ import ItemList from '../ItemList';
 import Average from '../Average';
 import CustomAppBar from '../Layout/AppBar';
 import DesiredAverage from '../DesiredAverage';
+import Form from '../Form';
 import './style.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', weight: '', mark: '' };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleAddCurrCrsEval = this.handleAddCurrCrsEval.bind(this);
     this.deleteEvalHandler = this.deleteEvalHandler.bind(this);
     this.submitAsCompleted = this.submitAsCompleted.bind(this);
   }
@@ -27,16 +27,8 @@ class App extends Component {
     }
   }
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleAddCurrCrsEval(e) {
-    e.preventDefault();
-    let { name, weight, mark } = this.state;
+  handleAddCurrCrsEval(params) {
+    let { name, weight, mark } = params;
     let assign = {
       name: name,
       weight: Number(weight),
@@ -73,42 +65,7 @@ class App extends Component {
     return (
       <div>
         <CustomAppBar text={name + ': ' + weight} />
-        <form onSubmit={this.handleAddCurrCrsEval.bind(this)}>
-          <section>
-            Evaluation Name
-            <input
-              type="text"
-              name="name"
-              value={this.state.name}
-              placeholder="Eval Name"
-              onChange={this.handleChange}
-            />
-          </section>
-          <section>
-            Evaluation Weight
-            <input
-              type="text"
-              name="weight"
-              value={this.state.weight}
-              placeholder="Eval Weight"
-              onChange={this.handleChange}
-            />
-          </section>
-          <section>
-            Evaluation Mark
-            <input
-              type="text"
-              name="mark"
-              value={this.state.mark}
-              placeholder="Eval Mark"
-              onChange={this.handleChange}
-            />
-          </section>
-          <Button type="submit" size="sm" color="info">
-            {' '}
-            Add Completed Evalution{' '}
-          </Button>
-        </form>
+        <Form type="complete" onSubmit={this.handleAddCurrCrsEval} />
 
         <div>
           <ItemList

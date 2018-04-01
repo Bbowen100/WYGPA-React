@@ -6,21 +6,14 @@ import Average from '../Average';
 import Chart from '../Chart';
 import CustomAppBar from '../Layout/AppBar';
 import DesiredAverage from '../DesiredAverage';
+import Form from '../Form';
 import * as actions from '../../actions';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import Button from 'material-ui/Button';
 
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cc_name: '',
-      cc_weight: '',
-      name: '',
-      weight: '',
-      mark: ''
-    };
     this.handleChange = this.handleChange.bind(this);
     this.handleGoToCurrCourse = this.handleGoToCurrCourse.bind(this);
     this.handleDelCourse = this.handleDelCourse.bind(this);
@@ -41,26 +34,23 @@ class Main extends Component {
     });
   };
 
-  handleAddCompCourse = e => {
-    e.preventDefault();
-    let { name, mark, weight } = this.state;
+  handleAddCompCourse = params => {
+    let { name, mark, weight } = params;
     this.props.dispatch(
       actions.addCompCourse({
-        name: name,
+        name,
         mark: Number(mark),
         weight: Number(weight)
       })
     );
-    this.setState({ name: '', mark: '', weight: '' });
   };
 
-  handleAddCurrentCourse = e => {
-    e.preventDefault();
-    let { cc_name, cc_weight } = this.state;
+  handleAddCurrentCourse = params => {
+    let { name, weight } = params;
     this.props.dispatch(
       actions.addCurrCourse({
-        name: cc_name,
-        weight: Number(cc_weight)
+        name,
+        weight: Number(weight)
       })
     );
     this.setState({ cc_name: '', cc_weight: '' });
@@ -85,31 +75,7 @@ class Main extends Component {
         <CustomAppBar text={this.props.state.auth.user + "'s dashboard"} />
 
         <h2> Current Courses </h2>
-        <form onSubmit={this.handleAddCurrentCourse.bind(this)}>
-          <section>
-            Course Name
-            <input
-              type="text"
-              name="cc_name"
-              value={this.state.cc_name}
-              onChange={this.handleChange}
-              placeholder="Course Name"
-            />
-          </section>
-          <section>
-            Course Weight
-            <input
-              type="text"
-              name="cc_weight"
-              value={this.state.cc_weight}
-              onChange={this.handleChange}
-              placeholder="Course Weight"
-            />
-          </section>
-          <Button type="submit" size="small" color="primary">
-            Add Current Course
-          </Button>
-        </form>
+        <Form type="partial" onSubmit={this.handleAddCurrentCourse} />
 
         <ItemList
           items={this.props.state.courses.currCourses}
@@ -119,41 +85,7 @@ class Main extends Component {
         />
 
         <h2> Completed Courses </h2>
-        <form onSubmit={this.handleAddCompCourse.bind(this)}>
-          <section>
-            Course Name
-            <input
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-              placeholder="Course Name"
-            />
-          </section>
-          <section>
-            Course Weight
-            <input
-              type="text"
-              name="weight"
-              value={this.state.weight}
-              onChange={this.handleChange}
-              placeholder="Course Weight"
-            />
-          </section>
-          <section>
-            Final Mark
-            <input
-              type="text"
-              name="mark"
-              value={this.state.mark}
-              onChange={this.handleChange}
-              placeholder="Final Course Mark"
-            />
-          </section>
-          <Button type="submit" size="small" color="primary">
-            Add Completed Course
-          </Button>
-        </form>
+        <Form type="complete" onSubmit={this.handleAddCompCourse} />
 
         <ItemList
           items={this.props.state.courses.compCourses}
