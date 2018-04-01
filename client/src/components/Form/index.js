@@ -9,13 +9,52 @@ class Form extends Component {
   state = {
     name: '',
     weight: '',
-    mark: ''
+    mark: '',
+    nameError: false,
+    markError: false,
+    weightError: false
   };
 
   Submit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.setState({ name: '', weight: '', mark: '' });
+    const err = this.validate();
+    if (!err) {
+      this.props.onSubmit(this.state);
+      this.setState({
+        name: '',
+        weight: '',
+        mark: '',
+        nameError: false,
+        markError: false,
+        weightError: false
+      });
+    }
+  };
+
+  validate = () => {
+    const { name, weight, mark } = this.state;
+    let isError = false;
+    if (name.length < 1) {
+      this.setState({ nameError: true });
+      isError = true;
+    } else {
+      this.setState({ nameError: false });
+    }
+
+    if (isNaN(Number(weight))) {
+      this.setState({ weightError: true });
+      isError = true;
+    } else {
+      this.setState({ weightError: false });
+    }
+
+    if (isNaN(Number(mark)) || (Number(mark) < 0 || Number(mark) > 100)) {
+      this.setState({ markError: true });
+      isError = true;
+    } else {
+      this.setState({ markError: false });
+    }
+    return isError;
   };
 
   handleChange = e => {
@@ -36,6 +75,7 @@ class Form extends Component {
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange}
+          error={this.state.nameError}
           margin="normal"
         />
 
@@ -45,6 +85,7 @@ class Form extends Component {
           className={classes.textField}
           value={this.state.weight}
           onChange={this.handleChange}
+          error={this.state.weightError}
           margin="normal"
         />
         {complete && (
@@ -54,6 +95,7 @@ class Form extends Component {
             className={classes.textField}
             value={this.state.mark}
             onChange={this.handleChange}
+            error={this.state.markError}
             margin="normal"
           />
         )}
@@ -64,7 +106,6 @@ class Form extends Component {
     );
   }
 }
-const validate = values => {};
 
 Form.propTypes = {
   type: PropTypes.string.isRequired,
