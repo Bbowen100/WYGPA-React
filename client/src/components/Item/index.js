@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import './style.css';
 
 class Item extends Component {
@@ -18,40 +21,49 @@ class Item extends Component {
     if (this.props.type === 'current') {
       comp = (
         <div>
-          <div
-            className="item current"
-            onClick={() => this.props.onclick(this.props.item)}
-          >
-            {name}
-            {weight}
-          </div>
-
-          <div
-            className="trash-icon"
-            onClick={() =>
-              this.props.deleteItem(this.props.item, this.props.type)
-            }
-          >
-            <FontAwesome name="trash" />
-          </div>
+          <Card>
+            <CardContent
+              className="clickable"
+              onClick={() => this.props.onclick(this.props.item)}
+            >
+              <Typography variant="headline" component="h2">
+                {name}
+              </Typography>
+              <Typography color="textSecondary">{weight}</Typography>
+            </CardContent>
+            <CardActions>
+              <FontAwesome
+                className="clickable"
+                name="trash"
+                onClick={() =>
+                  this.props.deleteItem(this.props.item, this.props.type)
+                }
+              />
+            </CardActions>
+          </Card>
         </div>
       );
     } else {
       comp = (
         <div>
-          <div className="item completed">
-            {name}
-            {weight}
-            {mark}
-          </div>
-          <div
-            className="trash-icon"
-            onClick={() =>
-              this.props.deleteItem(this.props.item, this.props.type)
-            }
-          >
-            <FontAwesome name="trash" />
-          </div>
+          <Card>
+            <CardContent>
+              <Typography variant="headline" component="h2">
+                {name}
+              </Typography>
+              <Typography color="textSecondary">{weight}</Typography>
+              <Typography color="textSecondary">{mark}</Typography>
+            </CardContent>
+            <CardActions>
+              <FontAwesome
+                className="clickable"
+                name="trash"
+                onClick={() =>
+                  this.props.deleteItem(this.props.item, this.props.type)
+                }
+              />
+            </CardActions>
+          </Card>
         </div>
       );
     }
