@@ -6,3 +6,7 @@
 .trash-icon {
   background: gray;
 }
+
+.clickable:hover {
+  cursor: pointer;
+}

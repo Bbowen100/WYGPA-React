@@ -6,10 +6,6 @@ const env = require('../config/environment');
 const SALTROUNDS = 10;
 
 module.exports.create = function(req, res, next) {
-  console.log(
-    'a post request was made to /api/user/signup, body is: ',
-    req.body
-  );
   let { user, password } = req.body;
   userModel.find({ name: user }, (err0, results) => {
     if (!results.length) {
@@ -33,10 +29,6 @@ module.exports.create = function(req, res, next) {
 };
 
 module.exports.receive = function(req, res, next) {
-  console.log(
-    'a post request was made to /api/user/login, body is: ',
-    req.body
-  );
   let { user, password } = req.body;
   userModel.findOne({ name: user }, (err0, result) => {
     if (result) {
@@ -45,7 +37,6 @@ module.exports.receive = function(req, res, next) {
           return res.status(401).json({ bool: null, error: err1 });
         } else {
           if (boolean) {
-            console.log(result, ' has been validated as a user');
             const token = jwt.sign(
               {
                 user: result.name,

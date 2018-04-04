@@ -68,10 +68,6 @@ module.exports.receive = function(req, res, next) {
 };
 //append a new course to a user's list of current courses
 module.exports.create = function(req, res, next) {
-  console.log(
-    'a post request was made to /api/curr-course, body is: ',
-    req.body.currCourse
-  );
   let course = req.body.currCourse;
   let user_id = req.user.id;
   currentCourse.findOne({ user_id }, (err, result) => {

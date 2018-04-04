@@ -34,7 +34,7 @@ class Form extends Component {
   validate = () => {
     const { name, weight, mark } = this.state;
     let isError = false;
-    if (name.length < 1) {
+    if (name.trim().length < 1) {
       this.setState({ nameError: true });
       isError = true;
     } else {
