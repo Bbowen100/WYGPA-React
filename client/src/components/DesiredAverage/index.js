@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
+import { Button, TextField, Typography, Paper } from 'material-ui';
 
 class DesiredAverage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      desiredAverage: 0,
-      neededAvg: 0
-    };
-  }
+  state = {
+    desiredAverage: 0,
+    neededAvg: 0,
+    remWeight: null
+  };
+
   calcDesiredAverage(e) {
     e.preventDefault();
     let desiredAvg = Number(this.refs.desiredAvg.value);
@@ -28,19 +27,43 @@ class DesiredAverage extends Component {
     this.setState({ desiredAverage: desiredAvg });
   }
 
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+  validate() {}
+
   render() {
     return (
       <div>
+        <Typography variant="headline">Desired Average</Typography>
         <form onSubmit={this.calcDesiredAverage.bind(this)}>
-          <input type="text" ref="desiredAvg" placeholder="Desired Average" />
-          <input type="text" ref="remWeight" placeholder="Remaining Weight" />
-          <Button type="submit">Get Needed Average</Button>
+          <TextField
+            name="desiredAvg"
+            label="Desired Average"
+            value={this.state.desiredAvg}
+            onChange={this.handleChange}
+            error={this.state.desiredAvgError}
+            margin="normal"
+          />
+          <br />
+          <TextField
+            name="remWeight"
+            label="Remaining Weight"
+            value={this.state.remWeight}
+            onChange={this.handleChange}
+            error={this.state.remWeightError}
+            margin="normal"
+          />
+          <br />
+          <Button type="submit">Submit</Button>
         </form>
-
-        <section>
+        <Typography variant="textSecondary">
           To get {this.state.desiredAverage} you will need to get
           {this.state.neededAvg.toFixed(2)} over your remaining assignments
-        </section>
+        </Typography>
       </div>
     );
   }
