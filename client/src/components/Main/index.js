@@ -8,6 +8,7 @@ import CustomAppBar from '../Layout/AppBar';
 import DesiredAverage from '../DesiredAverage';
 import Form from '../Form';
 import * as actions from '../../actions';
+import './style.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -93,14 +94,12 @@ class Main extends Component {
           type="completed"
         />
 
-        <div>
+        <div className="tuple">
           <Average
             items={this.props.state.courses.compCourses}
             dispatch={this.props.dispatch}
           />
-        </div>
 
-        <div>
           <DesiredAverage items={this.props.state.courses.compCourses} />
         </div>
 

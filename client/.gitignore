@@ -3,6 +3,10 @@
 # dependencies
 /node_modules
 
+# css files
+src/components/*/style.css
+src/components/*/style.css.map
+
 # testing
 /coverage
 
