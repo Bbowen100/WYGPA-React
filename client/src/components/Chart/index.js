@@ -1,34 +1,34 @@
-import React, {Component} from 'react';
-import {Bar} from 'react-chartjs-2';
+import React, { Component } from 'react';
+import { Bar } from 'react-chartjs-2';
 
-class Chart extends Component{
-  constructor(props){
-    super(props)
+class Chart extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      chartData:{}
-    }
+      chartData: {}
+    };
   }
-  componentWillReceiveProps(newProps){
-    if(newProps.courses.length > 0){
-      let marks = newProps.courses.map((course)=>course.mark);
-      let names = newProps.courses.map((course)=>course.name);
+  componentWillReceiveProps(newProps) {
+    if (newProps.courses.length > 0) {
+      let marks = newProps.courses.map(course => course.mark);
+      let names = newProps.courses.map(course => course.name);
       let obj = {
         labels: names,
-        datasets:[
+        datasets: [
           {
-            label:'Mark',
+            label: 'Mark',
             data: marks,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            backgroundColor: 'rgba(24, 24, 24, 0.6)'
           }
         ]
-      }
-      this.setState({chartData: obj})
+      };
+      this.setState({ chartData: obj });
     }
   }
 
-  render(){
-    return(
-      <div className='chart'>
+  render() {
+    return (
+      <div className="chart">
         <Bar
           data={this.state.chartData}
           options={{
@@ -37,15 +37,17 @@ class Chart extends Component{
               text: 'Marks For Your Completed Courses'
             },
             legend: {
-              display: true,
+              display: true
             },
             scales: {
-              yAxes: [{
+              yAxes: [
+                {
                   ticks: {
-                      suggestedMin: 0,
-                      suggestedMax: 100
+                    suggestedMin: 0,
+                    suggestedMax: 100
                   }
-              }]
+                }
+              ]
             }
           }}
         />

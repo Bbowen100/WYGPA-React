@@ -1,6 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { updateAverage } from "../../actions";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { updateAverage } from '../../actions';
+import { Typography } from 'material-ui';
+import './style.css';
 
 class Average extends Component {
   constructor(props) {
@@ -42,8 +44,10 @@ class Average extends Component {
 
   render() {
     return (
-      <div>
-        <label>Your average is: {this.state.average} </label>
+      <div className="body">
+        <Typography variant="headline">Your Average Is</Typography>
+        <br />
+        <Typography variant="display3">{this.state.average}</Typography>
       </div>
     );
   }

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
+import { Button, TextField, Typography, Paper } from 'material-ui';
+import './style.css';
 
 class DesiredAverage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      desiredAverage: 0,
-      neededAvg: 0
-    };
-  }
+  state = {
+    desiredAvg: undefined,
+    neededAvg: 0,
+    remWeight: undefined
+  };
+
   calcDesiredAverage(e) {
     e.preventDefault();
-    let desiredAvg = Number(this.refs.desiredAvg.value);
-    let remWeight = Number(this.refs.remWeight.value);
+    let desiredAvg = Number(this.state.desiredAvg);
+    let remWeight = Number(this.state.remWeight);
     let weight = this.props.items
       .map(ele => ele.weight)
       .reduce((acc, val) => acc + val);
@@ -25,22 +25,45 @@ class DesiredAverage extends Component {
     let accumWeight = weight + remWeight;
     let needed = (desiredAvg * accumWeight - totMarks) / remWeight;
     this.setState({ neededAvg: needed });
-    this.setState({ desiredAverage: desiredAvg });
   }
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+  validate() {}
 
   render() {
     return (
-      <div>
+      <div className="body">
+        <Typography variant="headline">Desired Average</Typography>
         <form onSubmit={this.calcDesiredAverage.bind(this)}>
-          <input type="text" ref="desiredAvg" placeholder="Desired Average" />
-          <input type="text" ref="remWeight" placeholder="Remaining Weight" />
-          <Button type="submit">Get Needed Average</Button>
+          <TextField
+            name="desiredAvg"
+            label="Desired Average"
+            value={this.state.desiredAvg}
+            onChange={this.handleChange}
+            error={this.state.desiredAvgError}
+            margin="normal"
+          />
+          <br />
+          <TextField
+            name="remWeight"
+            label="Remaining Weight"
+            value={this.state.remWeight}
+            onChange={this.handleChange}
+            error={this.state.remWeightError}
+            margin="normal"
+          />
+          <br />
+          <Button type="submit">Submit</Button>
         </form>
-
-        <section>
-          To get {this.state.desiredAverage} you will need to get
+        <Typography variant="subheading">
+          To get {this.state.desiredAvg} you will need to get
           {this.state.neededAvg.toFixed(2)} over your remaining assignments
-        </section>
+        </Typography>
       </div>
     );
   }
