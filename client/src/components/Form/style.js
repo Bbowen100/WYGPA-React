@@ -10,6 +10,9 @@ const styles = theme => ({
   },
   menu: {
     width: 200
+  },
+  align: {
+    textAlign: 'center'
   }
 });
 
