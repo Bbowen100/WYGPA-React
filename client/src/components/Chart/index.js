@@ -12,13 +12,25 @@ class Chart extends Component {
     if (newProps.courses.length > 0) {
       let marks = newProps.courses.map(course => course.mark);
       let names = newProps.courses.map(course => course.name);
+      let avgList = [];
+      for (let i = 0; i < marks.length; i++) {
+        avgList.push(newProps.average);
+      }
       let obj = {
         labels: names,
         datasets: [
           {
             label: 'Mark',
+            type: 'bar',
             data: marks,
             backgroundColor: 'rgba(24, 24, 24, 0.6)'
+          },
+          {
+            label: 'Average',
+            type: 'line',
+            data: avgList,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderColor: 'black'
           }
         ]
       };

@@ -112,9 +112,10 @@ class Main extends Component {
           <DesiredAverage items={this.props.state.courses.compCourses} />
         </div>
 
-        <div>
-          <Chart courses={this.props.state.courses.compCourses} />
-        </div>
+        <Chart
+          courses={this.props.state.courses.compCourses}
+          average={this.props.state.courses.currAverage}
+        />
       </div>
     );
   }
