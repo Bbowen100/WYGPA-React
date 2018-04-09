@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import { IconButton, Button, Typography, Toolbar, AppBar } from 'material-ui';
 import FontAwesome from 'react-fontawesome';
 import styles from './styles';
 
 class CustomAppBar extends Component {
+  signOut = () => {
+    localStorage.removeItem('jwtToken');
+    window.location.reload();
+  };
+
   render() {
     const { classes, text } = this.props;
     return (
@@ -33,7 +34,10 @@ class CustomAppBar extends Component {
             >
               {text.toUpperCase()}
             </Typography>
-            <Button color="inherit">Signout</Button>
+
+            <Button color="inherit" onClick={this.signOut}>
+              Signout
+            </Button>
           </Toolbar>
         </AppBar>
       </div>
