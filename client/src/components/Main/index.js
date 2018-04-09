@@ -78,8 +78,11 @@ class Main extends Component {
           dispatch={this.props.dispatch}
         />
 
-        <h2> Current Courses </h2>
-        <Form type="partial" onSubmit={this.handleAddCurrentCourse} />
+        <Form
+          type="partial"
+          title="Create Current Course"
+          onSubmit={this.handleAddCurrentCourse}
+        />
 
         <ItemList
           items={this.props.state.courses.currCourses}
@@ -88,8 +91,11 @@ class Main extends Component {
           onclick={this.handleGoToCurrCourse}
         />
 
-        <h2> Completed Courses </h2>
-        <Form type="complete" onSubmit={this.handleAddCompCourse} />
+        <Form
+          title="Create Completed Course"
+          type="complete"
+          onSubmit={this.handleAddCompCourse}
+        />
 
         <ItemList
           items={this.props.state.courses.compCourses}

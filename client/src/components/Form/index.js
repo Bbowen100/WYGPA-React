@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { TextField, Button, Typography } from 'material-ui/';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import styles from './style';
@@ -41,7 +40,7 @@ class Form extends Component {
       this.setState({ nameError: false });
     }
 
-    if (isNaN(Number(weight))) {
+    if (isNaN(Number(weight)) || weight.trim().length < 1) {
       this.setState({ weightError: true });
       isError = true;
     } else {
@@ -65,10 +64,11 @@ class Form extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const complete = this.props.type === 'complete';
+    const { classes, type, title } = this.props;
+    const complete = type === 'complete';
     return (
-      <form onSubmit={this.Submit.bind(this)}>
+      <form onSubmit={this.Submit.bind(this)} className={classes.align}>
+        {title && <Typography variant="headline">{title}</Typography>}
         <TextField
           name="name"
           label="Name"
@@ -108,6 +108,7 @@ class Form extends Component {
 }
 
 Form.propTypes = {
+  title: PropTypes.string,
   type: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
