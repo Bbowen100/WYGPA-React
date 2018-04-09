@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Button } from 'reactstrap';
+import { Button } from 'material-ui';
 import * as actions from '../../actions';
 import ItemList from '../ItemList';
 import Average from '../Average';
@@ -68,7 +68,11 @@ class App extends Component {
           text={name + ': ' + weight}
           dispatch={this.props.dispatch}
         />
-        <Form type="complete" onSubmit={this.handleAddCurrCrsEval} />
+        <Form
+          type="complete"
+          title="Add Evaluation"
+          onSubmit={this.handleAddCurrCrsEval}
+        />
 
         <div>
           <ItemList
@@ -77,19 +81,16 @@ class App extends Component {
           />
         </div>
 
-        <div className="block">
-          <div>
-            <Average
-              items={this.props.state.courses.currCourse.evals}
-              dispatch={this.props.dispatch}
-            />
-          </div>
-          <div>
-            <DesiredAverage items={this.props.state.courses.currCourse.evals} />
-          </div>
+        <div className="tuple block">
+          <Average
+            items={this.props.state.courses.currCourse.evals}
+            dispatch={this.props.dispatch}
+          />
+
+          <DesiredAverage items={this.props.state.courses.currCourse.evals} />
         </div>
         <div className="block">
-          <Button color="info" size="lg" onClick={this.submitAsCompleted}>
+          <Button color="primary" size="large" onClick={this.submitAsCompleted}>
             Submit As Completed
           </Button>
         </div>

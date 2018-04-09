@@ -5,26 +5,34 @@ import './style.css';
 
 class DesiredAverage extends Component {
   state = {
-    desiredAvg: undefined,
+    desiredAvg: '',
     neededAvg: 0,
-    remWeight: undefined
+    remWeight: '',
+    desiredAvgError: false,
+    remWeightError: false,
+    neededAvgError: false
   };
 
   calcDesiredAverage(e) {
     e.preventDefault();
-    let desiredAvg = Number(this.state.desiredAvg);
-    let remWeight = Number(this.state.remWeight);
-    let weight = this.props.items
-      .map(ele => ele.weight)
-      .reduce((acc, val) => acc + val);
-    let totMarks = this.props.items
-      .map(ele => ele.weight * ele.mark)
-      .reduce((acc, val) => {
-        return acc + val;
+    const err = this.validate();
+    if (!err) {
+      let desiredAvg = Number(this.state.desiredAvg);
+      let remWeight = Number(this.state.remWeight);
+      let weight = this.props.items
+        .map(ele => ele.weight)
+        .reduce((acc, val) => acc + val);
+      let totMarks = this.props.items
+        .map(ele => ele.weight * ele.mark)
+        .reduce((acc, val) => {
+          return acc + val;
+        });
+      let accumWeight = weight + remWeight;
+      let needed = (desiredAvg * accumWeight - totMarks) / remWeight;
+      this.setState({ neededAvg: needed }, function() {
+        this.validateNeededAvg();
       });
-    let accumWeight = weight + remWeight;
-    let needed = (desiredAvg * accumWeight - totMarks) / remWeight;
-    this.setState({ neededAvg: needed });
+    }
   }
 
   handleChange = e => {
@@ -33,7 +41,34 @@ class DesiredAverage extends Component {
       [name]: value
     });
   };
-  validate() {}
+  validate() {
+    const { desiredAvg, remWeight } = this.state;
+    let isError = false;
+    if (isNaN(Number(desiredAvg)) || desiredAvg.trim().length < 1) {
+      this.setState({ desiredAvgError: true });
+      isError = true;
+    } else {
+      this.setState({ desiredAvgError: false });
+    }
+
+    if (isNaN(Number(remWeight)) || remWeight.trim().length < 1) {
+      this.setState({ remWeightError: true });
+      isError = true;
+    } else {
+      this.setState({ remWeightError: false });
+    }
+
+    return isError;
+  }
+  validateNeededAvg() {
+    const { neededAvg } = this.state;
+    console.log('inside validate needed avg with ', neededAvg);
+    if (Number(neededAvg) < 0 || Number(neededAvg) > 100) {
+      this.setState({ neededAvgError: true });
+    } else {
+      this.setState({ neededAvgError: false });
+    }
+  }
 
   render() {
     return (
@@ -60,10 +95,17 @@ class DesiredAverage extends Component {
           <br />
           <Button type="submit">Submit</Button>
         </form>
-        <Typography variant="subheading">
-          To get {this.state.desiredAvg} you will need to get
-          {this.state.neededAvg.toFixed(2)} over your remaining assignments
-        </Typography>
+        {!this.state.neededAvgError && (
+          <Typography variant="subheading">
+            To get {this.state.desiredAvg} you will need to get
+            {this.state.neededAvg.toFixed(2)} over your remaining assignments
+          </Typography>
+        )}
+        {this.state.neededAvgError && (
+          <Typography variant="subheading">
+            It is not possible to get this mark
+          </Typography>
+        )}
       </div>
     );
   }
