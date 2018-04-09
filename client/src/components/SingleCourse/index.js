@@ -48,7 +48,6 @@ class App extends Component {
   submitAsCompleted() {
     let { name, weight, _id } = this.props.state.courses.currCourse;
     let mark = this.props.state.courses.currAverage;
-    console.log('in the submitAsCompleted with ', name, weight, mark, _id);
     this.props.dispatch(
       actions.addCompCourse({
         name: name,

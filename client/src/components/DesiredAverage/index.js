@@ -62,7 +62,6 @@ class DesiredAverage extends Component {
   }
   validateNeededAvg() {
     const { neededAvg } = this.state;
-    console.log('inside validate needed avg with ', neededAvg);
     if (Number(neededAvg) < 0 || Number(neededAvg) > 100) {
       this.setState({ neededAvgError: true });
     } else {
