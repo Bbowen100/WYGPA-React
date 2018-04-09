@@ -73,7 +73,10 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <CustomAppBar text={this.props.state.auth.user + "'s dashboard"} />
+        <CustomAppBar
+          text={this.props.state.auth.user + "'s dashboard"}
+          dispatch={this.props.dispatch}
+        />
 
         <h2> Current Courses </h2>
         <Form type="partial" onSubmit={this.handleAddCurrentCourse} />

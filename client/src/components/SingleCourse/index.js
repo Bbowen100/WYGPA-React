@@ -64,7 +64,10 @@ class App extends Component {
     const { name, weight } = this.props.state.courses.currCourse;
     return (
       <div>
-        <CustomAppBar text={name + ': ' + weight} />
+        <CustomAppBar
+          text={name + ': ' + weight}
+          dispatch={this.props.dispatch}
+        />
         <Form type="complete" onSubmit={this.handleAddCurrCrsEval} />
 
         <div>
