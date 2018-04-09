@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { IconButton, Button, Typography, Toolbar, AppBar } from 'material-ui';
