@@ -8,7 +8,7 @@
     "dev": "concurrently --kill-others-on-fail \"npm start\" \"npm run client\""
   },
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.18.2",
     "compression": "^1.7.2",
     "cookie": "^0.3.1",
