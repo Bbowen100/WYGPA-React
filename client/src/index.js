@@ -42,7 +42,7 @@ ReactDOM.render(
         <Route path="/current-course" component={SingleCourse} />
         <Route
           render={() => {
-            return <p> 404 Not Found</p>;
+            return <div> 404 Not Found</div>;
           }}
         />
       </Switch>

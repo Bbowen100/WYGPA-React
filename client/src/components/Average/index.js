@@ -53,16 +53,8 @@ class Average extends Component {
   }
 }
 
-Average.PropTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        weight: PropTypes.number.isRequired,
-        mark: PropTypes.number.isRequired
-      })
-    )
-  ),
+Average.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
   dispatch: PropTypes.func
 };
 

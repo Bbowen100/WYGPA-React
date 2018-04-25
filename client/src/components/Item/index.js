@@ -70,19 +70,9 @@ class Item extends Component {
   }
 }
 
-Item.PropTypes = {
-  item: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      weight: PropTypes.number,
-      mark: PropTypes.number
-    })
-  ),
-  id: PropTypes.objectOf(
-    PropTypes.shape({
-      index: PropTypes.number
-    })
-  )
+Item.propTypes = {
+  item: PropTypes.object,
+  id: PropTypes.number
 };
 
 export default Item;
