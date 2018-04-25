@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const app = express();
 const userModel = require('./models/user.js');
 const env = require('./config/environment.js');
-const { jwtAuthentication } = require('./middleware');
 const usersRouter = require('./routes/users');
 const comp_coursesRouter = require('./routes/comp-courses');
 const curr_coursesRouter = require('./routes/curr-courses');
@@ -21,14 +20,20 @@ if (!dev) {
   app.use(logger('common'));
   app.use(express.static(path.resolve(__dirname, 'client/build')));
   mongoose.connect(env.MONGO_PROD_URL);
+  app.get('/dashboard', function(req, res) {
+    res.redirect('/');
+  });
+  app.get('/current-course', function(req, res) {
+    res.redirect('/');
+  });
 } else {
   app.use(logger('dev'));
   mongoose.connect(env.MONGO_DEV_URL);
+  app.use(express.static(path.join(__dirname, 'public')));
 }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); //extension of views
 app.set('trust proxy', 1); // trust first proxy
@@ -36,9 +41,5 @@ app.set('trust proxy', 1); // trust first proxy
 app.use('/users', usersRouter);
 app.use('/api/comp-courses', comp_coursesRouter);
 app.use('/api/curr-courses', curr_coursesRouter);
-//middleware checker
-app.get('/api/middleware', jwtAuthentication, (req, res, next) => {
-  res.send(req.user);
-});
 
 module.exports = app;
