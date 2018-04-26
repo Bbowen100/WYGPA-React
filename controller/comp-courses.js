@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 module.exports.receive = function(req, res, next) {
   let user_id = req.user.id;
   completedCourse.findOne({ user_id }, (err, result) => {
-    console.log('inside comp courses with ', err, result);
     if (err || !result) {
       return res.status(300).json(err);
     } else if (result && result.courses) {
