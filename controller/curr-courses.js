@@ -61,7 +61,7 @@ module.exports.delEval = function(req, res, next) {
 module.exports.receive = function(req, res, next) {
   let user_id = req.user.id;
   currentCourse.findOne({ user_id }, 'courses', (err, result) => {
-    if (err) return res.status(500).json(err);
+    if (err) return res.status(300).json(err);
     else if (result && result.courses) {
       return res.status(200).json(result.courses);
     } else {

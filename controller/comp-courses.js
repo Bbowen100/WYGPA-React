@@ -4,9 +4,14 @@ const mongoose = require('mongoose');
 // get all the completed courses for a specific user
 module.exports.receive = function(req, res, next) {
   let user_id = req.user.id;
-  completedCourse.findOne({ user_id }, 'courses', (err, result) => {
-    if (err) return res.status(500).json(err);
-    return res.status(200).json(result.courses);
+  completedCourse.findOne({ user_id }, (err, result) => {
+    console.log('inside comp courses with ', err, result);
+    if (err || !result) {
+      return res.status(300).json(err);
+    } else if (result && result.courses) {
+      return res.status(200).json(result.courses);
+    } else return res.status(200).json(result);
+
     next();
   });
 };

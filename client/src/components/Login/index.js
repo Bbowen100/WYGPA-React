@@ -4,7 +4,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { authSuccess, authFail } from '../../actions';
+import { authSuccess } from '../../actions';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import './style.css';
 
@@ -16,6 +16,11 @@ class Login extends Component {
 
   login = e => {
     e.preventDefault();
+    this.setState({
+      loginFailure: false,
+      signUpFailure: false,
+      signUpSuccess: false
+    });
     const err = this.validateLogin();
     if (!err) {
       const { l_user, l_pass } = this.state;
@@ -30,7 +35,7 @@ class Login extends Component {
             this.props.dispatch(authSuccess(user));
             this.props.dispatch(push('/dashboard'));
           } else {
-            this.props.dispatch(authFail());
+            this.setState({ loginFailure: true });
           }
         });
     }
@@ -38,13 +43,22 @@ class Login extends Component {
 
   signup = e => {
     e.preventDefault();
+    this.setState({
+      loginFailure: false,
+      signUpFailure: false,
+      signUpSuccess: false
+    });
     const err = this.validateSignUp();
     if (!err) {
       const { s_user, s_pass } = this.state;
       axios
         .post('/users/signup/', { user: s_user, password: s_pass })
         .then(res => {
-          console.log(res.data);
+          if (res.data.bool) {
+            this.setState({ signUpSuccess: true });
+          } else {
+            this.setState({ signUpFailure: true });
+          }
         });
     }
   };
@@ -102,63 +116,76 @@ class Login extends Component {
     l_userError: false,
     l_passError: false,
     s_userError: false,
-    s_passError: false
+    s_passError: false,
+    loginFailure: false,
+    signUpSuccess: false,
+    signUpFailure: false
   };
 
   render() {
     return (
-      <div className="formStyle">
-        <form className="boxStyle" onSubmit={this.login.bind(this)}>
-          <h1> Login </h1>
-          <TextField
-            name="l_user"
-            label="Username"
-            value={this.state.l_user}
-            onChange={this.handleChange}
-            error={this.state.l_userError}
-            margin="normal"
-          />
-          <br />
-          <TextField
-            type="password"
-            name="l_pass"
-            label="Password"
-            value={this.state.l_pass}
-            onChange={this.handleChange}
-            error={this.state.l_passError}
-            margin="normal"
-          />
-          <br />
-          <Button type="submit" size="medium" color="primary">
-            Login
-          </Button>
-        </form>
-
-        <form className="boxStyle" onSubmit={this.signup.bind(this)}>
-          <h1> Sign Up </h1>
-          <TextField
-            name="s_user"
-            label="Username"
-            value={this.state.s_user}
-            onChange={this.handleChange}
-            error={this.state.s_userError}
-            margin="normal"
-          />
-          <br />
-          <TextField
-            type="password"
-            name="s_pass"
-            label="Password"
-            value={this.state.s_pass}
-            onChange={this.handleChange}
-            error={this.state.s_passError}
-            margin="normal"
-          />
-          <br />
-          <Button type="submit" size="medium" color="primary">
-            Sign Up
-          </Button>
-        </form>
+      <div>
+        {this.state.signUpSuccess && (
+          <div className="success"> Your Signup Was Successful </div>
+        )}
+        {this.state.signUpFailure && (
+          <div className="warning"> This Username Is Already In Use </div>
+        )}
+        {this.state.loginFailure && (
+          <div className="warning"> Your Login Has Failed </div>
+        )}
+        <div className="formStyle">
+          <form className="boxStyle" onSubmit={this.signup.bind(this)}>
+            <h1> Sign Up </h1>
+            <TextField
+              name="s_user"
+              label="Username"
+              value={this.state.s_user}
+              onChange={this.handleChange}
+              error={this.state.s_userError}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              type="password"
+              name="s_pass"
+              label="Password"
+              value={this.state.s_pass}
+              onChange={this.handleChange}
+              error={this.state.s_passError}
+              margin="normal"
+            />
+            <br />
+            <Button type="submit" size="medium" color="primary">
+              Sign Up
+            </Button>
+          </form>
+          <form className="boxStyle" onSubmit={this.login.bind(this)}>
+            <h1> Login </h1>
+            <TextField
+              name="l_user"
+              label="Username"
+              value={this.state.l_user}
+              onChange={this.handleChange}
+              error={this.state.l_userError}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              type="password"
+              name="l_pass"
+              label="Password"
+              value={this.state.l_pass}
+              onChange={this.handleChange}
+              error={this.state.l_passError}
+              margin="normal"
+            />
+            <br />
+            <Button type="submit" size="medium" color="primary">
+              Login
+            </Button>
+          </form>
+        </div>
       </div>
     );
   }

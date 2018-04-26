@@ -3,28 +3,28 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const env = require('../config/environment');
 
-const SALTROUNDS = 10;
-
 module.exports.create = function(req, res, next) {
   let { user, password } = req.body;
-  userModel.find({ name: user }, (err0, results) => {
-    if (!results.length) {
-      bcrypt.hash(password, SALTROUNDS, function(err1, hash) {
-        // Store hash in your password DB.
-        userModel.findOneAndUpdate(
-          { name: user },
-          { name: user, password: hash },
-          { upsert: true },
-          (err2, result) => {
-            return res.status(200).json({ bool: true, error: null });
-            next();
-          }
-        );
-      });
-    } else {
-      return res.status(200).json({ bool: null, error: 'Duplicate User Name' });
-      next();
+  userModel.findOne({ name: user }, (err0, result) => {
+    if (err0 || result) {
+      return res
+        .status(200)
+        .json({ bool: false, error: 'Username Already In Use' });
     }
+    bcrypt.hash(password, null, null, function(err1, hash) {
+      // Store hash in your password DB.
+      if (err1) return res.status(500).json(err1);
+      userModel.findOneAndUpdate(
+        { name: user },
+        { name: user, password: hash },
+        { upsert: true },
+        (err2, result) => {
+          if (err2) return res.status(400).json(err2);
+          return res.status(200).json({ bool: true, error: null });
+          next();
+        }
+      );
+    });
   });
 };
 
