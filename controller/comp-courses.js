@@ -5,12 +5,14 @@ const mongoose = require('mongoose');
 module.exports.receive = function(req, res, next) {
   let user_id = req.user.id;
   completedCourse.findOne({ user_id }, (err, result) => {
-    if (err || !result) {
+    if (err) {
+      console.log('compcorses err ', err);
       return res.status(300).json(err);
-    } else if (result && result.courses) {
-      return res.status(200).json(result.courses);
-    } else return res.status(200).json(result);
-
+    } else if (!result) {
+      return res.status(202).json(result);
+    } else {
+      return res.status(200).json(result);
+    }
     next();
   });
 };
@@ -19,8 +21,8 @@ module.exports.create = function(req, res, next) {
   let user_id = req.user.id;
   let course = req.body.compCourse;
   completedCourse.findOne({ user_id }, (err, result) => {
-    if (err) return res.status(500).json(err);
-    else if (!err && result) {
+    if (err) return res.status(404).json(err);
+    else if (result) {
       let courses = result.courses;
       courses.push(course);
       result.set({ courses });
@@ -29,7 +31,7 @@ module.exports.create = function(req, res, next) {
         return res.status(200).json(updatedCourse);
         next();
       });
-    } else if (!err && !result) {
+    } else if (!result) {
       let newCourse = {
         user_id: mongoose.Types.ObjectId(user_id),
         courses: [course]
@@ -37,7 +39,6 @@ module.exports.create = function(req, res, next) {
       completedCourse.findOneAndUpdate(
         { user_id },
         newCourse,
-        { new: true },
         { upsert: true },
         (err, n_Course) => {
           if (err) return res.status(500).json(err);
@@ -68,5 +69,4 @@ module.exports.delete = function(req, res, next) {
       next();
     });
   });
-  return;
 };

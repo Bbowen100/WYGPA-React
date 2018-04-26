@@ -31,30 +31,25 @@ module.exports.create = function(req, res, next) {
 module.exports.receive = function(req, res, next) {
   let { user, password } = req.body;
   userModel.findOne({ name: user }, (err0, result) => {
-    if (result) {
-      bcrypt.compare(password, result.password, (err1, boolean) => {
-        if (err1) {
-          return res.status(401).json({ bool: null, error: err1 });
-        } else {
-          if (boolean) {
-            const token = jwt.sign(
-              {
-                user: result.name,
-                id: result._id
-              },
-              env.JWT_SECRET
-            );
-            return res.status(200).json({ bool: boolean, error: null, token });
-          }
-          return res
-            .status(200)
-            .json({ bool: boolean, error: null, token: null });
-        }
-        next();
-      });
-    } else {
-      return res.status(401).json({ bool: null, error: 'No Such User' });
+    if (err0) return res.status(301).json({ bool: null, error: err0 });
+    else if (!result)
+      return res.status(202).json({ bool: false, error: 'No Such User' });
+    bcrypt.compare(password, result.password, (err1, boolean) => {
+      if (err1) {
+        return res.status(301).json({ bool: null, error: err1 });
+      } else if (boolean) {
+        const token = jwt.sign(
+          {
+            user: result.name,
+            id: result._id
+          },
+          env.JWT_SECRET
+        );
+        return res.status(200).json({ bool: boolean, error: null, token });
+      }
+      return res.status(200).json({ bool: boolean, error: null, token: null });
       next();
-    }
+    });
+    next();
   });
 };

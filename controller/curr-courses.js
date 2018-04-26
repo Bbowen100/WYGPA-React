@@ -31,6 +31,7 @@ module.exports.getEvals = function(req, res, next) {
     if (index < 0) res.status(400).json({ message: 'Course Not Found' });
     let evals = result.courses[index].evals;
     return res.status(200).json(evals);
+    next();
   });
 };
 // delete a specifc evaluation for a specific course
@@ -60,10 +61,11 @@ module.exports.delEval = function(req, res, next) {
 //send the user's list of current courses
 module.exports.receive = function(req, res, next) {
   let user_id = req.user.id;
-  currentCourse.findOne({ user_id }, 'courses', (err, result) => {
-    if (err) return res.status(300).json(err);
-    else if (result && result.courses) {
-      return res.status(200).json(result.courses);
+  currentCourse.findOne({ user_id }, (err, result) => {
+    if (err) {
+      return res.status(300).json(err);
+    } else if (!result) {
+      return res.status(202).json(result);
     } else {
       return res.status(200).json(result);
     }
@@ -75,7 +77,8 @@ module.exports.create = function(req, res, next) {
   let course = req.body.currCourse;
   let user_id = req.user.id;
   currentCourse.findOne({ user_id }, (err, result) => {
-    if (!err && result) {
+    if (err) return res.status(404).json(err);
+    else if (result) {
       let courses = result.courses;
       courses.push(course);
       result.set({ courses });
@@ -84,7 +87,7 @@ module.exports.create = function(req, res, next) {
         return res.status(200).json(updatedCourse);
         next();
       });
-    } else if (!result && !err) {
+    } else if (!result) {
       var newCourse = {
         user_id: mongoose.Types.ObjectId(user_id),
         courses: [course]
@@ -99,9 +102,6 @@ module.exports.create = function(req, res, next) {
           next();
         }
       );
-    } else {
-      return res.status(500).json(err);
-      next();
     }
   });
 };
@@ -113,8 +113,10 @@ module.exports.delete = function(req, res, next) {
     if (err) return res.status(500).json(err);
     let courses = result.courses;
     let c_index = courses.findIndex(course => course._id == course_id);
-    if (c_index < 0)
+    if (c_index < 0) {
       return res.status(400).json({ message: 'Course Not Found' });
+      next();
+    }
     courses.splice(c_index, 1);
     result.set({ courses });
     result.save((err, updatedCourses) => {

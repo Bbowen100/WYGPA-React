@@ -27,7 +27,7 @@ class Login extends Component {
       axios
         .post('/users/login/', { user: l_user, password: l_pass })
         .then(res => {
-          if (res.data.bool) {
+          if (res && res.data.bool) {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthorizationToken(token);
