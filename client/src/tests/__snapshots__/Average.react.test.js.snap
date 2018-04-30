@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Average calculates and displays the right average 1`] = `
+<div
+  className="body"
+>
+  <h1
+    className="MuiTypography-root-1 MuiTypography-headline-6"
+  >
+    Your Average Is
+  </h1>
+  <br />
+  <h1
+    className="MuiTypography-root-1 MuiTypography-display3-3"
+  >
+    76
+  </h1>
+</div>
+`;

@@ -35,7 +35,7 @@ class Login extends Component {
             this.props.dispatch(authSuccess(user));
             this.props.dispatch(push('/dashboard'));
           } else {
-            this.setState({ loginFailure: true });
+            this.setState({ loginFailure: true, l_user: '', l_pass: '' });
           }
         });
     }
@@ -55,9 +55,9 @@ class Login extends Component {
         .post('/users/signup/', { user: s_user, password: s_pass })
         .then(res => {
           if (res.data.bool) {
-            this.setState({ signUpSuccess: true });
+            this.setState({ signUpSuccess: true, s_user: '', s_pass: '' });
           } else {
-            this.setState({ signUpFailure: true });
+            this.setState({ signUpFailure: true, s_user: '', s_pass: '' });
           }
         });
     }
@@ -124,7 +124,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="loginComponent">
         {this.state.signUpSuccess && (
           <div className="success"> Your Signup Was Successful </div>
         )}
@@ -134,9 +134,13 @@ class Login extends Component {
         {this.state.loginFailure && (
           <div className="warning"> Your Login Has Failed </div>
         )}
+        <div className="heading">
+          <h1 className="title">wygpa</h1>
+          <h4 className="subtitle">Whats Your GPA</h4>
+        </div>
         <div className="formStyle">
-          <form className="boxStyle" onSubmit={this.signup.bind(this)}>
-            <h1> Sign Up </h1>
+          <form className="signup" onSubmit={this.signup.bind(this)}>
+            <h2> Sign Up </h2>
             <TextField
               name="s_user"
               label="Username"
@@ -156,12 +160,13 @@ class Login extends Component {
               margin="normal"
             />
             <br />
-            <Button type="submit" size="medium" color="primary">
+            <Button type="submit" size="large" color="primary">
               Sign Up
             </Button>
           </form>
-          <form className="boxStyle" onSubmit={this.login.bind(this)}>
-            <h1> Login </h1>
+
+          <form className="login" onSubmit={this.login.bind(this)}>
+            <h2> Login </h2>
             <TextField
               name="l_user"
               label="Username"
@@ -181,7 +186,7 @@ class Login extends Component {
               margin="normal"
             />
             <br />
-            <Button type="submit" size="medium" color="primary">
+            <Button type="submit" size="large" color="primary">
               Login
             </Button>
           </form>

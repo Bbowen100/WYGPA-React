@@ -96,8 +96,9 @@ class DesiredAverage extends Component {
         </form>
         {!this.state.neededAvgError && (
           <Typography variant="subheading">
-            To get {this.state.desiredAvg} you will need to get
-            {this.state.neededAvg.toFixed(2)} over your remaining assignments
+            To get <b>{this.state.desiredAvg}</b> you will need to get
+            <b>{' ' + this.state.neededAvg.toFixed(2)}</b> over your remaining
+            assignments
           </Typography>
         )}
         {this.state.neededAvgError && (

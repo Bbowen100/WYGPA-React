@@ -1,14 +1,58 @@
-.formStyle {
-  margin-top: 10em;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(2, 49.7%);
+@card: ;
+@title: #4867aa;
+@subtitle: #808080;
+@card-title: #000000;
+
+.loginComponent {
+  font-family: 'Open Sans', Helvetica, sans-serif;
 }
 
-.boxStyle {
-  background-color: #dcdcdc;
-  background: linear-gradient(45deg, #fff, #dcdcdc);
+.title-super() {
   text-align: center;
+  font-weight: bold;
+}
+
+.formStyle {
+  margin-left: 30%;
+  margin-right: 30%;
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(1, 100%);
+  h2 {
+    .title-super;
+  }
+}
+
+.title {
+  .title-super;
+  color: @title;
+  font-size: 5em;
+  //text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.subtitle {
+  .title-super;
+  font-size: 15px;
+  color: @subtitle;
+}
+
+.boxStyle() {
+  .title-super;
+  //border: 3px solid green;
+  box-shadow: 0px 2px 5px 0px gray;
+  background: @card;
+  margin-top: 2em;
+  color: @subtitle;
+}
+
+.signup {
+  .boxStyle;
+  //background: linear-gradient(45deg, #fff, #dcdcdc);
+}
+
+.login {
+  .boxStyle;
+  //background: radial-gradient(purple, blue, #fff);
 }
 
 .alert() {
