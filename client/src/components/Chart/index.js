@@ -23,14 +23,14 @@ class Chart extends Component {
             label: 'Mark',
             type: 'bar',
             data: marks,
-            backgroundColor: 'rgba(24, 24, 24, 0.6)'
+            backgroundColor: '#4867aa'
           },
           {
             label: 'Average',
             type: 'line',
             data: avgList,
             backgroundColor: 'rgba(0, 0, 0, 0)',
-            borderColor: 'black'
+            borderColor: '#dca500'
           }
         ]
       };

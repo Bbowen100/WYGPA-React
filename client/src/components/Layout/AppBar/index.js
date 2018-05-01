@@ -16,7 +16,7 @@ class CustomAppBar extends Component {
     const { classes, text } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: '#4867aa' }}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}

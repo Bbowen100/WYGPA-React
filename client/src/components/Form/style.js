@@ -12,7 +12,8 @@ const styles = theme => ({
     width: 200
   },
   align: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: '1em'
   }
 });
 

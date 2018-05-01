@@ -7,9 +7,9 @@ import './style.css';
 
 class Item extends Component {
   render() {
-    let comp, name, weight, mark;
+    let name, weight, mark;
     if (this.props.item.name) {
-      name = <div> Name: {this.props.item.name} </div>;
+      name = <div> {this.props.item.name} </div>;
     }
     if (this.props.item.weight) {
       weight = <div>Weight: {this.props.item.weight}</div>;
@@ -17,56 +17,35 @@ class Item extends Component {
     if (this.props.item.mark) {
       mark = <div>Mark: {this.props.item.mark}</div>;
     }
-    if (this.props.type === 'current') {
-      comp = (
-        <div>
-          <Card>
-            <CardContent
+    const current = this.props.type === 'current';
+
+    return (
+      <div>
+        <Card style={{ backgroundColor: '#e6edfb' }}>
+          <CardContent
+            className={current ? 'clickable item' : 'item'}
+            onClick={
+              current ? () => this.props.onclick(this.props.item) : undefined
+            }
+          >
+            <Typography style={{ fontWeight: 'bold', fontSize: '2em' }}>
+              {name}
+            </Typography>
+            <Typography color="textSecondary">{weight}</Typography>
+            {!current && <Typography color="textSecondary">{mark}</Typography>}
+          </CardContent>
+          <CardActions>
+            <FontAwesome
               className="clickable"
-              onClick={() => this.props.onclick(this.props.item)}
-            >
-              <Typography variant="headline" component="h2">
-                {name}
-              </Typography>
-              <Typography color="textSecondary">{weight}</Typography>
-            </CardContent>
-            <CardActions>
-              <FontAwesome
-                className="clickable"
-                name="trash"
-                onClick={() =>
-                  this.props.deleteItem(this.props.item, this.props.type)
-                }
-              />
-            </CardActions>
-          </Card>
-        </div>
-      );
-    } else {
-      comp = (
-        <div>
-          <Card>
-            <CardContent>
-              <Typography variant="headline" component="h2">
-                {name}
-              </Typography>
-              <Typography color="textSecondary">{weight}</Typography>
-              <Typography color="textSecondary">{mark}</Typography>
-            </CardContent>
-            <CardActions>
-              <FontAwesome
-                className="clickable"
-                name="trash"
-                onClick={() =>
-                  this.props.deleteItem(this.props.item, this.props.type)
-                }
-              />
-            </CardActions>
-          </Card>
-        </div>
-      );
-    }
-    return comp;
+              name="trash"
+              onClick={() =>
+                this.props.deleteItem(this.props.item, this.props.type)
+              }
+            />
+          </CardActions>
+        </Card>
+      </div>
+    );
   }
 }
 
