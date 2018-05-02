@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-# sudo su
-# NODE_ENV=production node bin/www
-# forever start bin/www
+sudo su
+git pull
 forever restart bin/www
