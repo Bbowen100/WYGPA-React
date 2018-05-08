@@ -34,8 +34,6 @@ if (!dev) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade'); //extension of views
 app.set('trust proxy', 1); // trust first proxy
 
 app.use('/users', usersRouter);
