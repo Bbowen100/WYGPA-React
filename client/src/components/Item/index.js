@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import { Typography } from '@material-ui/core';
 import './style.css';
 
 class Item extends Component {
@@ -50,8 +52,7 @@ class Item extends Component {
 }
 
 Item.propTypes = {
-  item: PropTypes.object,
-  id: PropTypes.number
+  item: PropTypes.object
 };
 
 export default Item;

@@ -8,6 +8,7 @@
     "dev": "concurrently --kill-others-on-fail \"npm start\" \"npm run client\""
   },
   "dependencies": {
+    "@material-ui/core": "^3.6.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.18.2",
     "compression": "^1.7.2",
@@ -15,12 +16,13 @@
     "cookie-parser": "~1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "cookies-js": "^1.2.3",
-    "debug": "~2.6.9",
+    "debug": "^2.6.9",
     "express": "~4.15.5",
     "install": "^0.10.2",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.1.1",
     "lodash": "^4.17.4",
+    "material-ui": "^0.20.2",
     "moment": "^2.18.1",
     "mongodb": "^2.2.31",
     "mongoose": "^5.0.6",

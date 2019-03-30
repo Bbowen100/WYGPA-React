@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField } from 'material-ui';
+import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
@@ -203,4 +203,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return { dispatch };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

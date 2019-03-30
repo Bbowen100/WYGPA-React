@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField, Typography } from 'material-ui';
+import { Button, TextField, Typography } from '@material-ui/core';
 import './style.css';
 
 class DesiredAverage extends Component {

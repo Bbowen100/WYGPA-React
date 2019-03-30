@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { IconButton, Button, Typography, Toolbar, AppBar } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  IconButton,
+  Button,
+  Typography,
+  Toolbar,
+  AppBar
+} from '@material-ui/core';
 import FontAwesome from 'react-fontawesome';
 import styles from './styles';
 

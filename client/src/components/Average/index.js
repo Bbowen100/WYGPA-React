@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { updateAverage } from '../../actions';
-import { Typography } from 'material-ui';
+import { Typography } from '@material-ui/core';
 import './style.css';
 
 class Average extends Component {

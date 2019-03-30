@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Button } from 'material-ui';
+import { Button } from '@material-ui/core';
 import * as actions from '../../actions';
 import ItemList from '../ItemList';
 import Average from '../Average';
@@ -105,6 +105,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return { dispatch };
 };
 
-const SingleCourse = connect(mapStateToProps, mapDispatchToProps)(App);
+const SingleCourse = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 export default SingleCourse;
