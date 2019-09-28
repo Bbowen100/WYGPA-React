@@ -14,6 +14,7 @@ const comp_coursesRouter = require('./routes/comp-courses');
 const curr_coursesRouter = require('./routes/curr-courses');
 const dev = app.get('env') !== 'production';
 
+console.log('dev value is', app.get('env'));
 if (!dev) {
   app.disable('x-powered-by');
   app.use(compression());
